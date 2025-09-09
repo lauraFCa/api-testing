@@ -1,0 +1,58 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           JSONLibrary
+Resource          variables.robot
+
+*** Variables ***
+${PR_URI}          ${BASE_URL}/pulls
+${SESSION_NAME}         pull-requests_tests
+
+
+*** Keywords ***
+## Base Keywords
+pull-requests session request
+    [Documentation]    Creates an API session
+    [Arguments]    ${session_name}=${SESSION_NAME} 
+    Create Session    ${session_name}    ${BASE_URL}
+    &{HEADER}=    Create Dictionary    Content-Type=${CONTENT_TYPE}    Accept=${GITHUB_ACCEPT}    X-GitHub-Api-Version=2022-11-28    Authorization=Bearer ${GITHUB_TOKEN}
+    Set Suite Variable    &{HEADER}
+
+status code should be ${expected_code}
+    Should Be Equal As Integers    ${RESPONSE.status_code}    ${expected_code}
+
+JSON field '${field}' should be ${value}
+    [Arguments]            ${json_field_path}
+    ${json_resp}=          Convert String to JSON      ${RESPONSE.content}
+    ${real_value0}=        Get Value From Json         ${json_resp}          ${json_field_path}
+    ${real_value}=         Set Variable                ${real_value0[0]}
+    ${compared_value}=     Convert To String           ${real_value}
+    Should Be Equal        ${compared_value}           ${value}
+
+JSON array field should have ${amount} items
+    [Arguments]       ${json_field_path}
+    ${json_resp}=     Convert String to JSON      ${RESPONSE.content}
+    ${real_value}=    Get Value From Json         ${json_resp}       ${json_field_path}
+    ${expected_amount}=    Convert To Integer        ${amount}
+    ${real_amount}=       Get Length                ${real_value[0]}
+    Should Be Equal As Numbers    ${real_amount}    ${expected_amount}
+
+
+## PULL REQUESTS Keywords
+
+user requests all Pull Requests
+    [Arguments]    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
+    ${response}=    GET On Session    ${session_name}    ${PR_URI}    headers=${HEADER}    expected_status=${expected_status_code}
+    Set Suite Variable    ${RESPONSE}    ${response}
+
+
+user try to update Pull Request with ID ${pr_id}
+    [Arguments]    ${update_payload}    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
+    ${response}=    PATCH On Session    ${session_name}    ${PR_URI}/${pr_id}    json=${update_payload}    headers=${HEADER}    expected_status=${expected_status_code}
+    Set Suite Variable    ${RESPONSE}    ${response}
+
+
+user requests all Comments in Pull Request with ID ${pr_id}
+    [Arguments]    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
+    ${response}=    GET On Session    ${session_name}    ${PR_URI}/${pr_id}/comments    headers=${HEADER}    expected_status=${expected_status_code}
+    Set Suite Variable    ${RESPONSE}    ${response}
+

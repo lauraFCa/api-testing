@@ -1,0 +1,40 @@
+name: Run Github API Tests
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      run-tests:
+        description: 'TestInput'
+        required: false
+        default: 'Some str value'
+        type: string
+
+
+jobs:
+    run_tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.x'
+
+        - name: Install dependencies
+          run: |
+            python -m venv venv
+            source venv/bin/activate
+            pip install -r robot_framework/requirements.txt
+
+        - name: Run Robot Framework tests
+          env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          run: |
+            source venv/bin/activate
+            pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests
