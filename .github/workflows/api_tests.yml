@@ -37,18 +37,30 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           run: |
             source venv/bin/activate
-            pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests
+            ${OUTP}= pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests | tee robot_framework/report/pabot_output.txt
           
         - name: Upload Robot Framework test results
           if: always()
+          id: upload-artifact
           uses: actions/upload-artifact@v4.6.2
           with:
             name: robot-framework-results
             path: robot_framework/report/
 
+        - name: Display Results
+          if: ${{ steps.upload-artifact.outcome == 'success' }}
+          run: |
+            echo "Robot Framework test results have been uploaded as an artifact."
+            ls -la robot_framework/report/
+            SUMMARY_LINE=$(grep -E '^[0-9]+ tests, [0-9]+ passed, [0-9]+ failed, [0-9]+ skipped' robot_framework/report/pabot_output.txt)
+            echo "## Test Summary" >> $GITHUB_STEP_SUMMARY
+            echo "$SUMMARY_LINE" >> $GITHUB_STEP_SUMMARY
+
 
     # Single deploy job since we're just deploying
     deploy_results_page:
+      needs: run_tests
+
       environment:
         name: github-pages
         url: ${{ steps.deployment.outputs.page_url }}
