@@ -79,6 +79,7 @@ jobs:
         - name: List files and folders
           run: |
             ls 
+            ls robot_framework/
             ls robot_framework/report
             ls -la robot_framework/report/robot-framework-results
 
