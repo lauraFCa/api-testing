@@ -6,8 +6,8 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      run-tests:
-        description: 'TestInput'
+      input-name:
+        description: 'Test Input'
         required: false
         default: 'Some str value'
         type: string
