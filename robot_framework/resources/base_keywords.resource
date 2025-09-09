@@ -9,7 +9,7 @@ Close API Session
     Delete All Sessions
 
 
-Set Github Header
+Set_Github_Header
     [Documentation]    Set the full header for GitHub API requests
     &{headers}=    Create Dictionary    Content-Type=${CONTENT_TYPE}    Accept=${GITHUB_ACCEPT}    X-GitHub-Api-Version=2022-11-28    Authorization=Bearer ${GITHUB_TOKEN}
     RETURN    ${headers}

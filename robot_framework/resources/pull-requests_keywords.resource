@@ -15,7 +15,7 @@ pull-requests session request
     [Documentation]    Creates an API session
     [Arguments]    ${session_name}=${SESSION_NAME} 
     Create Session    ${session_name}    ${BASE_URL}
-    &{HEADER}=    Set Github Header
+    &{HEADER}=    Set_Github_Header
     Set Suite Variable    &{HEADER}
 
 status code should be ${expected_code}
