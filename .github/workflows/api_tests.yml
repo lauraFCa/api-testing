@@ -37,8 +37,10 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           run: |
             source venv/bin/activate
-            ${OUTP}= pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests | tee robot_framework/report/pabot_output.txt
-          
+            mkdir -p robot_framework/report
+            pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests | tee robot_framework/report/pabot_output.txt
+        
+        
         - name: Upload Robot Framework test results
           if: always()
           id: upload-artifact
@@ -47,6 +49,7 @@ jobs:
             name: robot-framework-results
             path: robot_framework/report/
 
+            
         - name: Display Results
           if: ${{ steps.upload-artifact.outcome == 'success' }}
           run: |
