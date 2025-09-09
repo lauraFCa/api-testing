@@ -60,7 +60,6 @@ jobs:
             echo "$SUMMARY_LINE" >> $GITHUB_STEP_SUMMARY
 
 
-    # Single deploy job since we're just deploying
     deploy_results_page:
       needs: run_tests
 
@@ -77,10 +76,16 @@ jobs:
         - name: Setup Pages
           uses: actions/configure-pages@v5
 
+        - name: List files and folders
+          run: |
+            ls 
+            ls robot_framework/report
+            ls -la robot_framework/report/robot-framework-results
+
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v3
           with:
-            path: 'robot_framework/report/robot-framework-results'
+            path: 'robot_framework/report/'
 
         - name: Deploy to GitHub Pages
           id: deployment
