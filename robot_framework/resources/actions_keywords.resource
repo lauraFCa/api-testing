@@ -38,7 +38,6 @@ user requests all Workflows
     Should Be Equal As Integers    ${expected_status_code}    ${response.status_code}
     Set Suite Variable    ${RESPONSE}    ${response}
 
-
 user requests one specific Workflow
     [Arguments]   ${workflow_id}     ${expected_status_code}=200    ${session_name}=${SESSION_NAME}
     &{github_header}=    Set_Github_Header
