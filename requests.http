@@ -1,0 +1,24 @@
+@OWNER = lauraFCa
+@REPO = api-testing
+
+GET https://api.github.com/repos/{{OWNER}}/{{REPO}}/actions/workflows HTTP/1.1
+content-type: application/json
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+Authorization: Bearer {{ GITHUB_TOKEN }}
+
+
+
+#####
+
+PATCH https://api.github.com/repos/{{OWNER}}/{{REPO}}/pulls/1 HTTP/1.1
+content-type: application/json
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+Authorization: Bearer {{ GITHUB_TOKEN }}
+
+{
+    "title": "Pull Request Title (from API)",
+    "body": "Pull Request Body - Description of the changes. (from API)",
+    "state": "open"
+}

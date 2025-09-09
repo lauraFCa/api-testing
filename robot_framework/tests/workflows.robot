@@ -6,9 +6,10 @@ Resource          ../resources/actions_keywords.resource
 Default Tags      actions
 
 Test Teardown     Close API Session
+Suite Teardown    Reenable a Workflow    ${EXISTING_WORKFLOW_ID} 
 
 *** Variables ***
-${EXISTING_WORKFLOW_ID}    123
+${EXISTING_WORKFLOW_ID}    187890478
 ${NON_EXISTING_ID}    99999999
 
 

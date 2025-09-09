@@ -59,3 +59,10 @@ user try to delete a Workflow run
     [Arguments]    ${run_id}    ${expected_status_code}=204    ${session_name}=${SESSION_NAME}
     ${response}=    DELETE On Session    ${session_name}    ${ACTIONS_URI}/runs/${run_id}    headers=&{HEADER}    expected_status=${expected_status_code}
     Set Suite Variable    ${RESPONSE}    ${response}
+
+
+Reenable a Workflow
+    [Arguments]    ${workflow_id}
+    Create Session    ${session_name}    ${BASE_URL}
+    &{header}=    Create Dictionary    Content-Type=${CONTENT_TYPE}    Accept=${GITHUB_ACCEPT}    X-GitHub-Api-Version=2022-11-28    Authorization=Bearer ${GITHUB_TOKEN}
+    ${response}=    PUT On Session    ${session_name}    ${ACTIONS_URI}/workflows/${workflow_id}/enable    headers=&{header}    expected_status=204
