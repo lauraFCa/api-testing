@@ -38,3 +38,35 @@ jobs:
           run: |
             source venv/bin/activate
             pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests
+          
+        - name: Upload Robot Framework test results
+          if: always()
+          uses: actions/upload-artifact@v4.6.2
+          with:
+            name: robot-framework-results
+            path: robot_framework/report/
+
+
+    # Single deploy job since we're just deploying
+    deploy_results_page:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Setup Pages
+          uses: actions/configure-pages@v5
+
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v3
+          with:
+            path: 'robot_framework/report/'
+
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
