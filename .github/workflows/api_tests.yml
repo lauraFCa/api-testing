@@ -49,7 +49,7 @@ jobs:
             name: robot-framework-results
             path: robot_framework/report/
 
-            
+
         - name: Display Results
           if: ${{ steps.upload-artifact.outcome == 'success' }}
           run: |
@@ -80,7 +80,7 @@ jobs:
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v3
           with:
-            path: 'robot_framework/report/'
+            path: 'robot_framework/report/robot-framework-results'
 
         - name: Deploy to GitHub Pages
           id: deployment
