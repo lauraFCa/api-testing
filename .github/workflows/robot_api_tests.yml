@@ -49,7 +49,7 @@ jobs:
           run: |
             source venv/bin/activate
             mkdir -p robot_framework/report
-            pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests | tee robot_framework/report/pabot_output.txt
+            pabot --testlevelsplit --processes 5 --listener RetryFailed:1 --removekeywords NAME:base_keywords --output robot_framework/report/output.xml --log robot_framework/report/log.html --report robot_framework/report/report.html robot_framework/tests | tee robot_framework/report/pabot_output.txt
             mv robot_framework/report/report.html robot_framework/report/index.html
 
         

@@ -2,6 +2,7 @@
 Library           RequestsLibrary
 Library           JSONLibrary
 Resource          variables.robot
+Resource    base_keywords.resource
 
 *** Variables ***
 ${ACTIONS_URI}          ${BASE_URL}/actions
@@ -14,7 +15,7 @@ authorized user in API session
     [Documentation]    Creates an API session
     [Arguments]    ${session_name}=${SESSION_NAME} 
     Create Session    ${session_name}    ${BASE_URL}
-    &{HEADER}=    Create Dictionary    Content-Type=${CONTENT_TYPE}    Accept=${GITHUB_ACCEPT}    X-GitHub-Api-Version=2022-11-28    Authorization=Bearer ${GITHUB_TOKEN}
+    &{HEADER}=    Set Github Header
     Set Suite Variable    &{HEADER}
 
 status code should be ${expected_code}
