@@ -15,9 +15,7 @@ pull-requests session request
     [Documentation]    Creates an API session
     [Arguments]    ${session_name}=${SESSION_NAME} 
     Create Session    ${session_name}    ${BASE_URL}
-    &{HEADER}=    Set_Github_Header
-    Set Suite Variable    &{HEADER}
-
+    
 status code should be ${expected_code}
     Should Be Equal As Integers    ${RESPONSE.status_code}    ${expected_code}
 
@@ -42,18 +40,21 @@ JSON array field should have ${amount} items
 
 user requests all Pull Requests
     [Arguments]    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
-    ${response}=    GET On Session    ${session_name}    ${PR_URI}    headers=${HEADER}    expected_status=${expected_status_code}
+    &{github_header}=    Set_Github_Header
+    ${response}=    GET On Session    ${session_name}    ${PR_URI}    headers=${github_header}    expected_status=${expected_status_code}
     Set Suite Variable    ${RESPONSE}    ${response}
 
 
 user try to update Pull Request with ID ${pr_id}
     [Arguments]    ${update_payload}    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
-    ${response}=    PATCH On Session    ${session_name}    ${PR_URI}/${pr_id}    json=${update_payload}    headers=${HEADER}    expected_status=${expected_status_code}
+    &{github_header}=    Set_Github_Header
+    ${response}=    PATCH On Session    ${session_name}    ${PR_URI}/${pr_id}    json=${update_payload}    headers=${github_header}    expected_status=${expected_status_code}
     Set Suite Variable    ${RESPONSE}    ${response}
 
 
 user requests all Comments in Pull Request with ID ${pr_id}
     [Arguments]    ${session_name}=${SESSION_NAME}    ${expected_status_code}=200
-    ${response}=    GET On Session    ${session_name}    ${PR_URI}/${pr_id}/comments    headers=${HEADER}    expected_status=${expected_status_code}
+    &{github_header}=    Set_Github_Header
+    ${response}=    GET On Session    ${session_name}    ${PR_URI}/${pr_id}/comments    headers=${github_header}    expected_status=${expected_status_code}
     Set Suite Variable    ${RESPONSE}    ${response}
 
