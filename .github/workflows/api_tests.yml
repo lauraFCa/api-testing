@@ -80,7 +80,7 @@ jobs:
           uses: actions/download-artifact@v5
           with:
             name: robot-framework-results
-            path: robot_framework/
+            path: robot_framework/robot-framework-results
 
         - name: List files and folders
           run: |
