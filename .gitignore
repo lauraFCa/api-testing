@@ -1,4 +1,5 @@
 venv
 pabot_results
 report
+.vscode
 .pabotsuitenames

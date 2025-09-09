@@ -17,7 +17,7 @@ List all Workflows from Repo
     Given authorized user in API session
     When user requests all Workflows
     Then status code should be ${200}
-    And JSON field 'total_count' should be 0    $.total_count
+    And JSON field 'total_count' should be 2    $.total_count
 
 
 Get non-existing Workflow
@@ -25,6 +25,7 @@ Get non-existing Workflow
     When user requests one specific Workflow    workflow_id=${NON_EXISTING_ID}    expected_status_code=404
     Then status code should be ${404}
     And JSON field 'message' should be Not Found    $.message
+
 
 Disable an existing Workflow
     Given authorized user in API session

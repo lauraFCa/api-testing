@@ -74,6 +74,7 @@ jobs:
 
     deploy_results_page:
       needs: run_tests
+      if: ${{ github.ref == 'refs/heads/main' }}
 
       environment:
         name: github-pages
