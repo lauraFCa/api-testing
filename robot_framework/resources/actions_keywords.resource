@@ -21,7 +21,6 @@ status code should be ${expected_code}
 
 JSON field '${field}' should be ${value}
     [Arguments]            ${json_field_path}
-    &{github_header}=    Set_Github_Header
     ${json_resp}=          Convert String to JSON      ${RESPONSE.content}
     ${real_value0}=        Get Value From Json         ${json_resp}          ${json_field_path}
     ${real_value}=         Set Variable                ${real_value0[0]}

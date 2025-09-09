@@ -44,8 +44,9 @@ Disable a non-existing Workflow
 Create a dispatch event to an existing Workflow
     ${workflow_inputs}=    Create Dictionary    name=TestInput
     ${body}=    Create Dictionary    ref=main    inputs=${workflow_inputs}
+    ${body_string}=    Convert Json To String    json_object=${body}
     Given authorized user in API session
-    When user try to create a dispatch event to a workflow    ${EXISTING_WORKFLOW_ID}    ${body}    204
+    When user try to create a dispatch event to a workflow    ${EXISTING_WORKFLOW_ID}    ${body_string}    204
     Then status code should be ${204}
 
 
