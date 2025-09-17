@@ -1,7 +1,7 @@
 # Robot Framework API Testing
 
 
-[Tests Results page](https://laurafca.github.io/api-testing/) |  [![Run Github API Tests](https://github.com/lauraFCa/api-testing/actions/workflows/api_tests.yml/badge.svg)](https://github.com/lauraFCa/api-testing/actions/workflows/api_tests.yml)
+[Tests Results page](https://laurafca.github.io/api-testing/) |  [![Run Github API Tests](https://github.com/lauraFCa/api-testing/actions/workflows/robot_api_tests.yml/badge.svg)](https://github.com/lauraFCa/api-testing/actions/workflows/robot_api_tests.yml)
 --|--
 
 
