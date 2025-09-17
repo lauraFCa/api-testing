@@ -1,9 +1,9 @@
 name: Run Github API Tests with Robot Framework
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:
       input-name:

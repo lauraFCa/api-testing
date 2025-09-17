@@ -33,7 +33,7 @@ jobs:
 
         - name: Start Cypress
           run: |
-            npm start & wait-on http://localhost:8080
+            npm cy:open & wait-on http://localhost:8080
 
         - name: Run Cypress tests
           run: |
