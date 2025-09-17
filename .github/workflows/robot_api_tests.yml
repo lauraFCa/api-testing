@@ -1,4 +1,4 @@
-name: Run Github API Tests
+name: Run Github API Tests with Robot Framework
 
 on:
   push:

@@ -3,3 +3,4 @@ pabot_results
 report
 .vscode
 .pabotsuitenames
+node_modules

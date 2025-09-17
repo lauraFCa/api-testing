@@ -1,0 +1,40 @@
+name: Run Github API Tests with Cypress
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      input-name:
+        description: 'Test Input'
+        required: false
+        default: 'Some str value'
+        type: string
+
+
+
+jobs:
+    run_tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up node
+          uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+
+        - name: Install dependencies
+          run: |
+            npm install
+
+        - name: Start Cypress
+          run: |
+            npm start & wait-on http://localhost:8080
+
+        - name: Run Cypress tests
+          run: |
+            npx cypress run --env inputName=${{ secrets.GITHUB_TOKEN }}
