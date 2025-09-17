@@ -3,6 +3,7 @@
     "cy:open": "npx cypress open"
   },
   "devDependencies": {
-    "cypress": "^15.2.0"
+    "cypress": "^15.2.0",
+    "wait-on": "^9.0.0"
   }
 }
