@@ -8,6 +8,7 @@ describe("Issues API Testing", () => {
         cy.sendGithubRequest("/issues", "GET", "issuesRequest");
 
         cy.get("@issuesRequest").then((issues) => {
+            console.log("request response: "+issues);
             expect(issues.status).to.eq(200);
             expect(issues.body.length).to.be.greaterThan(1);
 

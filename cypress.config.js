@@ -4,7 +4,8 @@ module.exports = defineConfig({
   projectId: 'api',
   reporter: 'json',
   reporterOptions: {
-    mochaFile: 'results/report.json',
+    mochaFile: 'report.json',
+    reportDir: 'cypress/results',
     toConsole: true,
   },
   e2e: {
