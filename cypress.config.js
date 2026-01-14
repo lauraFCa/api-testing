@@ -7,8 +7,5 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl: "https://api.github.com/repos/lauraFCa/api-testing",
-  },
-  env:{
-    GITHUB_TOKEN: ""
   }
 });

@@ -6,12 +6,13 @@ on:
   #     - main
   workflow_dispatch:
     inputs:
-      input-name:
-        description: 'Test Input'
+      run_notes:
+        description: 'Notes'
         required: false
-        default: 'Some str value'
+        default: ''
         type: string
 
+run-name: Robot Framework API Tests | ${{inputs.run_notes}}
 
 permissions:
   contents: read

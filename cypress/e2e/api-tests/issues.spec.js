@@ -3,8 +3,8 @@
 
 describe("Issues API Testing", () => {
 
-    it("Get all issues in repo", () => {
-
+    it.only("Get all issues in repo", () => {
+        console.log("Get all issues in repo")
         cy.sendGithubRequest("/issues", "GET", "issuesRequest");
 
         cy.get("@issuesRequest").then((issues) => {

@@ -1,18 +1,18 @@
 name: Run Github API Tests with Cypress
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:
-      input-name:
-        description: 'Test Input'
+      run_notes:
+        description: 'Notes'
         required: false
-        default: 'Some str value'
+        default: ''
         type: string
 
-
+run-name: Cypress API Tests | ${{inputs.run_notes}}
 
 jobs:
     run_tests:
