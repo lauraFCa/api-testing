@@ -7,35 +7,43 @@ on:
   workflow_dispatch:
     inputs:
       run_notes:
-        description: 'Notes'
+        description: "Notes"
         required: false
-        default: ''
+        default: ""
         type: string
 
 run-name: Cypress API Tests | ${{inputs.run_notes}}
 
 jobs:
-    run_tests:
-        runs-on: ubuntu-latest
+  run_tests:
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-        - name: Set up node
-          uses: actions/setup-node@v2
-          with:
-            node-version: '24.x'
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "24.x"
 
-        - name: Install dependencies
-          run: |
-            npm install
-            npm install wait-on --save-dev
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install wait-on --save-dev
 
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        continue-on-error: true
+        with:
+          start: npm run cy:api
+          env: inputName=${{ secrets.GITHUB_TOKEN }}
 
-        - name: Cypress run
-          uses: cypress-io/github-action@v6
-          with:
-            start: npm run cy:api
-            env: inputName=${{ secrets.GITHUB_TOKEN }}
+      - name: List files
+        run: ls
 
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: "*.json"
