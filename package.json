@@ -1,7 +1,7 @@
 {
   "scripts": {
     "cy:open": "npx cypress open",
-    "cy:api": "npx cypress run --spec 'cypress/e2e/api-tests/*.spec.js' --reporter json"
+    "cy:api": "npx cypress run --spec 'cypress/e2e/api-tests/*.spec.js'"
   },
   "devDependencies": {
     "cypress": "^15.9.0",

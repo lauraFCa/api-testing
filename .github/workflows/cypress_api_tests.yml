@@ -41,10 +41,13 @@ jobs:
 
       - name: List files
         run: ls
+
+      - name: List files (cypress)
+        run: ls
         working-directory: cypress
 
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: "cypress/*.json"
+          path: "results/*.json"

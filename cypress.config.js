@@ -2,7 +2,11 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   projectId: 'api',
-  // port: 8080,
+  reporter: 'json',
+  reporterOptions: {
+    mochaFile: 'results/report.json',
+    toConsole: true,
+  },
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
