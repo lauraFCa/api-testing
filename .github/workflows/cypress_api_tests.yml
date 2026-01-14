@@ -35,11 +35,10 @@ jobs:
 
         - name: Cypress run
           uses: cypress-io/github-action@v6
-          env:
-             inputName: ${{ secrets.GITHUB_TOKEN }}
           with:
-            build: npm run build
             start: npm start
+            browser: chrome
+            env: inputName=${{ secrets.GITHUB_TOKEN }}
 
 
         #- name: Start Cypress
