@@ -1,7 +1,11 @@
 .env
 venv
-pabot_results
-report
 .vscode
-.pabotsuitenames
+
 node_modules
+
+pabot_results
+.pabotsuitenames
+report
+mochawesome-report/*
+cypress/screenshots/

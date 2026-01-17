@@ -27,10 +27,16 @@ jobs:
         with:
           node-version: "24.x"
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
       - name: Install dependencies
         run: |
           npm install
           npm install wait-on --save-dev
+
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -46,8 +52,88 @@ jobs:
         run: ls
         working-directory: cypress
 
+
+      - name: Print Report to Github Summary
+        shell: python3
+        run: |
+          import json
+
+          report = None
+          with open('mochawesome-report/mochawesome.json', 'r') as f:
+            report = json.loads(f.read())
+
+          if (not report['stats']):
+            raise f"No stats found in report!\n{report}"
+
+          suites_data = report['results'][0]['suites']
+
+          suites_tests_info = ''
+
+          for single_suite in suites_data:
+              suites_tests_info += f"- Suite: {single_suite['title']}\n\n"
+              suites_tests_info += "Test name | Status | Duration (ms) | Error |\n"
+              suites_tests_info += "--- | --- | --- | --- |\n"
+              tests_data = single_suite['tests']
+              for single_test in tests_data:
+                  test_title = single_test['title']
+                  test_status = single_test['state'] # failed
+                  test_duration = single_test['duration']
+
+                  has_error_msg = (test_status == "failed") and (single_test['err'] is not None) and (single_test['err']['message'] is not None)
+                  test_error_message = single_test['err']['message'].replace('\n', '  ').strip() if has_error_msg else '-'
+
+                  suites_tests_info += f"{test_title} | {test_status} | {test_duration} | {test_error_message} |\n"
+
+              suites_tests_info+="\n"
+
+
+          total_tests = int(report['stats']['tests'])
+          sucess_tests = int(report['stats']['passes'])
+          sucess_percentage = (sucess_tests * 100) / total_tests
+
+          failed_tests = int(report['stats']['failures'])
+          failed_percentage = (failed_tests * 100) / total_tests
+
+          others = int(total_tests - sucess_tests - failed_tests)
+          others_percentage = (others * 100) / total_tests
+
+          summary = f"""
+          # Tests Run Report
+
+          Total Suites: {report['stats']['suites']}
+          Run duration: {report['stats']['duration']}\n
+
+          # | Amount | Percentage
+          -- | -- | -- 
+          Total Tests | {str(total_tests)} | 100% 
+          Success | {str(sucess_tests)} | {sucess_percentage}% 
+          Fail | {str(failed_tests)} | {failed_percentage}% 
+          Others | {str(others)} | {others_percentage}% 
+
+          Details:
+          {suites_tests_info}
+          """
+
+          with open('summary.md', 'w') as f:
+            f.write(summary)
+
+          print(summary)
+          os.environ['GITHUB_STEP_SUMMARY'] = summary
+
+      - name: Add report to summary
+        run: |
+          echo cat summary.md >> $GITHUB_STEP_SUMMARY
+
+
+
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: "cypress/results/report.json"
+          path: "mochawesome-report/"
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: "cypress/screenshots/"

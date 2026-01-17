@@ -1,10 +1,13 @@
 {
   "scripts": {
     "cy:open": "npx cypress open",
-    "cy:api": "npx cypress run --spec 'cypress/e2e/api-tests/*.spec.js'"
+    "cy:api": "npx cypress run --spec 'cypress/e2e/api-tests/*.cy.js' --reporter mochawesome"
   },
   "devDependencies": {
     "cypress": "^15.9.0",
     "wait-on": "^9.0.0"
+  },
+  "dependencies": {
+    "mochawesome": "^7.1.4"
   }
 }
