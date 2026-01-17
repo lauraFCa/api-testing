@@ -112,7 +112,8 @@ jobs:
           Fail | {str(failed_tests)} | {failed_percentage}% 
           Others | {str(others)} | {others_percentage}% 
 
-          Details:
+          ## Details: 
+
           {suites_tests_info}
           """
 
