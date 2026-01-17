@@ -124,8 +124,7 @@ jobs:
 
       - name: Add report to summary
         run: |
-          test_summary=$(cat summary.md)
-          echo test_summary >> $GITHUB_STEP_SUMMARY
+          cat summary.md >$GITHUB_STEP_SUMMARY
 
 
 
