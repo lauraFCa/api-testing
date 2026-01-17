@@ -54,7 +54,7 @@ jobs:
 
 
       - name: Print Report to Github Summary
-        shell: python3
+        shell: python
         run: |
           import json
 
