@@ -9,7 +9,7 @@ Test Teardown     Close API Session
 Suite Teardown    Reenable a Workflow    ${EXISTING_WORKFLOW_ID} 
 
 *** Variables ***
-${EXISTING_WORKFLOW_ID}    187890478
+${EXISTING_WORKFLOW_ID}    224538045
 ${NON_EXISTING_ID}    99999999
 
 
