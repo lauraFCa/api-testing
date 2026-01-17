@@ -54,6 +54,7 @@ jobs:
 
 
       - name: Print Report to Github Summary
+        continue-on-error: true
         shell: python
         run: |
           import json
