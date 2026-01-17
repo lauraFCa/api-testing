@@ -105,7 +105,7 @@ jobs:
           Total Suites: {report['stats']['suites']}
           Run duration: {report['stats']['duration']}\n
 
-          # | Amount | Percentage
+          - | Amount | Percentage
           -- | -- | -- 
           Total Tests | {str(total_tests)} | 100% 
           Success | {str(sucess_tests)} | {sucess_percentage}% 
