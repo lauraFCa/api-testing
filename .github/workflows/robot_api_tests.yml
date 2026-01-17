@@ -46,7 +46,7 @@ jobs:
 
         - name: Run Robot Framework tests
           env:
-            GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             source venv/bin/activate
             mkdir -p robot_framework/report
