@@ -58,6 +58,7 @@ jobs:
         shell: python
         run: |
           import json
+          import os
 
           report = None
           with open('mochawesome-report/mochawesome.json', 'r') as f:
@@ -123,7 +124,8 @@ jobs:
 
       - name: Add report to summary
         run: |
-          echo cat summary.md >> $GITHUB_STEP_SUMMARY
+          test_summary=$(cat summary.md)
+          echo test_summary >> $GITHUB_STEP_SUMMARY
 
 
 
