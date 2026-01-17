@@ -1,0 +1,13 @@
+name: Workflow used for Tests
+
+on:
+    workflow_dispatch:
+
+
+jobs:
+    single_stage:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Print something
+              run: echo 'Workflow used for API tests'
